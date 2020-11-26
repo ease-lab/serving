@@ -103,6 +103,9 @@ type config struct {
 	TracingConfigSampleRate           float64                   `split_words:"true"` // optional
 	TracingConfigZipkinEndpoint       string                    `split_words:"true"` // optional
 	TracingConfigStackdriverProjectID string                    `split_words:"true"` // optional
+
+	GuestAddr string `split_words:"true" required:"true"`
+	GuestPort string `split_words:"true" required:"true"`
 }
 
 func init() {
@@ -279,7 +282,7 @@ func buildServer(ctx context.Context, env config, healthState *health.State, rp 
 		maxIdleConns = env.ContainerConcurrency
 	}
 
-	target := net.JoinHostPort("127.0.0.1", env.UserPort)
+	target := net.JoinHostPort(env.GuestAddr, env.GuestPort)
 
 	httpProxy := pkghttp.NewHeaderPruningReverseProxy(target, pkghttp.NoHostOverride, activator.RevisionHeaders)
 	httpProxy.Transport = buildTransport(env, logger, maxIdleConns)
