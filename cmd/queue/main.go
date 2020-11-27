@@ -21,6 +21,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+
 	"net"
 	"net/http"
 	"os"
@@ -34,6 +35,7 @@ import (
 
 	"k8s.io/apimachinery/pkg/types"
 
+	log "github.com/sirupsen/logrus"
 	network "knative.dev/networking/pkg"
 	pkglogging "knative.dev/pkg/logging"
 	"knative.dev/pkg/logging/logkey"
@@ -113,6 +115,7 @@ func init() {
 }
 
 func main() {
+	log.Info("This is the vHive QP code")
 	flag.Parse()
 
 	// If this is set, we run as a standalone binary to probe the queue-proxy.
