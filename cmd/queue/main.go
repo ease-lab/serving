@@ -189,12 +189,12 @@ func main() {
 		},
 	}
 
-	encodedProbe, err := readiness.EncodeProbe(servingProbe)
+	env.ServingReadinessProbe, err = readiness.EncodeProbe(servingProbe)
 	if err != nil {
 		logger.Fatalw("Failed to create stats reporter", zap.Error(err))
 	}
 
-	probe := buildProbe(logger, encodedProbe)
+	probe := buildProbe(logger, env)
 	healthState := &health.State{}
 
 	mainServer := buildServer(ctx, env, healthState, probe, stats, logger)
